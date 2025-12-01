@@ -1,0 +1,277 @@
+[2025-12-01 11:32:05] INFO     Anonymous       127.0.0.1     api.health_check - Request: GET /api/v1/health | Extra: {'method': 'GET', 'path': '/api/v1/health', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:05] INFO     Anonymous       127.0.0.1     api.health_check - Response: 200 | Extra: {'status_code': 200, 'content_length': 56}
+[2025-12-01 11:32:05] INFO     Anonymous       127.0.0.1     api.get_expenses - Request: GET /api/v1/expenses | Extra: {'method': 'GET', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:05] INFO     Anonymous       127.0.0.1     api.get_expenses - Response: 401 | Extra: {'status_code': 401, 'content_length': 52}
+[2025-12-01 11:32:06] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:06] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:06] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:06] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:06] INFO         3       127.0.0.1     api.get_expenses - Request: GET /api/v1/expenses | Extra: {'method': 'GET', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:06] INFO         3       127.0.0.1     api.get_expenses - Response: 200 | Extra: {'status_code': 200, 'content_length': 91}
+[2025-12-01 11:32:07] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:07] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1   api.create_expense - Request: POST /api/v1/expenses | Extra: {'method': 'POST', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:07] INFO         3       127.0.0.1   api.create_expense - Response: 400 | Extra: {'status_code': 400, 'content_length': 54}
+[2025-12-01 11:32:08] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:08] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:08] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:08] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:08] INFO         3       127.0.0.1      api.get_expense - Request: GET /api/v1/expenses/1 | Extra: {'method': 'GET', 'path': '/api/v1/expenses/1', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:08] INFO         3       127.0.0.1      api.get_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 391}
+[2025-12-01 11:32:09] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:09] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:09] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:09] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:09] INFO         3       127.0.0.1   api.update_expense - Request: PUT /api/v1/expenses/1 | Extra: {'method': 'PUT', 'path': '/api/v1/expenses/1', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:09] INFO         3       127.0.0.1   api.update_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 431}
+[2025-12-01 11:32:09] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:10] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:10] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:10] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:10] INFO         3       127.0.0.1   api.delete_expense - Request: DELETE /api/v1/expenses/1 | Extra: {'method': 'DELETE', 'path': '/api/v1/expenses/1', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:10] INFO         3       127.0.0.1   api.delete_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 58}
+[2025-12-01 11:32:10] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:10] INFO         2       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:10] INFO         2       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:10] INFO         2       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2926}
+[2025-12-01 11:32:10] INFO         2       127.0.0.1  api.approve_expense - Request: POST /api/v1/expenses/1/approve | Extra: {'method': 'POST', 'path': '/api/v1/expenses/1/approve', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:10] INFO         2       127.0.0.1  api.approve_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 432}
+[2025-12-01 11:32:11] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:11] INFO         2       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:11] INFO         2       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:11] INFO         2       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2926}
+[2025-12-01 11:32:11] INFO         2       127.0.0.1   api.reject_expense - Request: POST /api/v1/expenses/1/reject | Extra: {'method': 'POST', 'path': '/api/v1/expenses/1/reject', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:11] INFO         2       127.0.0.1   api.reject_expense - Response: 400 | Extra: {'status_code': 400, 'content_length': 71}
+[2025-12-01 11:32:12] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:12] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:12] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:12] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:12] INFO         3       127.0.0.1  api.approve_expense - Request: POST /api/v1/expenses/1/approve | Extra: {'method': 'POST', 'path': '/api/v1/expenses/1/approve', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:12] INFO         3       127.0.0.1  api.approve_expense - Response: 403 | Extra: {'status_code': 403, 'content_length': 67}
+[2025-12-01 11:32:12] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:12] INFO         1       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:12] INFO         1       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:12] INFO         1       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 3153}
+[2025-12-01 11:32:12] INFO         1       127.0.0.1        api.get_users - Request: GET /api/v1/users | Extra: {'method': 'GET', 'path': '/api/v1/users', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:12] INFO         1       127.0.0.1        api.get_users - Response: 200 | Extra: {'status_code': 200, 'content_length': 762}
+[2025-12-01 11:32:13] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:13] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:13] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:13] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:13] INFO         3       127.0.0.1        api.get_users - Request: GET /api/v1/users | Extra: {'method': 'GET', 'path': '/api/v1/users', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:13] INFO         3       127.0.0.1        api.get_users - Response: 403 | Extra: {'status_code': 403, 'content_length': 44}
+[2025-12-01 11:32:14] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:14] INFO         1       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:14] INFO         1       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:14] INFO         1       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 3153}
+[2025-12-01 11:32:14] INFO         1       127.0.0.1      api.create_user - Request: POST /api/v1/users | Extra: {'method': 'POST', 'path': '/api/v1/users', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:14] INFO         1       127.0.0.1      api.create_user - Response: 201 | Extra: {'status_code': 201, 'content_length': 305}
+[2025-12-01 11:32:14] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:14] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:32:14] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:14] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:32:14] INFO         3       127.0.0.1 api.get_stats_summary - Request: GET /api/v1/stats/summary | Extra: {'method': 'GET', 'path': '/api/v1/stats/summary', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:32:14] INFO         3       127.0.0.1 api.get_stats_summary - Response: 200 | Extra: {'status_code': 200, 'content_length': 102}
+[2025-12-01 11:35:48] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:35:48] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:35:48] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:35:48] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:35:48] INFO         3       127.0.0.1   api.create_expense - Request: POST /api/v1/expenses | Extra: {'method': 'POST', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:35:48] INFO         3       127.0.0.1   api.create_expense - Response: 500 | Extra: {'status_code': 500, 'content_length': 566}
+[2025-12-01 11:36:07] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:36:07] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:36:07] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:36:07] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:36:07] INFO         3       127.0.0.1   api.create_expense - Request: POST /api/v1/expenses | Extra: {'method': 'POST', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:36:07] INFO         3       127.0.0.1   api.create_expense - Response: 500 | Extra: {'status_code': 500, 'content_length': 566}
+[2025-12-01 11:37:13] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:37:13] INFO         1       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:37:13] INFO         1       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:37:13] INFO         1       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:37:13] INFO         1       127.0.0.1   api.create_expense - Request: POST /api/v1/expenses | Extra: {'method': 'POST', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:37:13] INFO         1       127.0.0.1   api.create_expense - Response: 201 | Extra: {'status_code': 201, 'content_length': 448}
+[2025-12-01 11:38:10] INFO     Anonymous       127.0.0.1     api.health_check - Request: GET /api/v1/health | Extra: {'method': 'GET', 'path': '/api/v1/health', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:10] INFO     Anonymous       127.0.0.1     api.health_check - Response: 200 | Extra: {'status_code': 200, 'content_length': 56}
+[2025-12-01 11:38:10] INFO     Anonymous       127.0.0.1     api.get_expenses - Request: GET /api/v1/expenses | Extra: {'method': 'GET', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:10] INFO     Anonymous       127.0.0.1     api.get_expenses - Response: 401 | Extra: {'status_code': 401, 'content_length': 52}
+[2025-12-01 11:38:10] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1     api.get_expenses - Request: GET /api/v1/expenses | Extra: {'method': 'GET', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1     api.get_expenses - Response: 200 | Extra: {'status_code': 200, 'content_length': 91}
+[2025-12-01 11:38:11] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1   api.create_expense - Request: POST /api/v1/expenses | Extra: {'method': 'POST', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:11] INFO         3       127.0.0.1   api.create_expense - Response: 201 | Extra: {'status_code': 201, 'content_length': 448}
+[2025-12-01 11:38:12] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:12] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:12] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:12] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:12] INFO         3       127.0.0.1   api.create_expense - Request: POST /api/v1/expenses | Extra: {'method': 'POST', 'path': '/api/v1/expenses', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:12] INFO         3       127.0.0.1   api.create_expense - Response: 400 | Extra: {'status_code': 400, 'content_length': 54}
+[2025-12-01 11:38:13] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1      api.get_expense - Request: GET /api/v1/expenses/1 | Extra: {'method': 'GET', 'path': '/api/v1/expenses/1', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1      api.get_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 391}
+[2025-12-01 11:38:13] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1   api.update_expense - Request: PUT /api/v1/expenses/1 | Extra: {'method': 'PUT', 'path': '/api/v1/expenses/1', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:13] INFO         3       127.0.0.1   api.update_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 431}
+[2025-12-01 11:38:14] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:14] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:14] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:14] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:14] INFO         3       127.0.0.1   api.delete_expense - Request: DELETE /api/v1/expenses/1 | Extra: {'method': 'DELETE', 'path': '/api/v1/expenses/1', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:14] INFO         3       127.0.0.1   api.delete_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 58}
+[2025-12-01 11:38:15] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:15] INFO         2       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:15] INFO         2       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:15] INFO         2       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2926}
+[2025-12-01 11:38:15] INFO         2       127.0.0.1  api.approve_expense - Request: POST /api/v1/expenses/1/approve | Extra: {'method': 'POST', 'path': '/api/v1/expenses/1/approve', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:15] INFO         2       127.0.0.1  api.approve_expense - Response: 200 | Extra: {'status_code': 200, 'content_length': 432}
+[2025-12-01 11:38:15] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:16] INFO         2       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:16] INFO         2       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:16] INFO         2       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2926}
+[2025-12-01 11:38:16] INFO         2       127.0.0.1   api.reject_expense - Request: POST /api/v1/expenses/1/reject | Extra: {'method': 'POST', 'path': '/api/v1/expenses/1/reject', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:16] INFO         2       127.0.0.1   api.reject_expense - Response: 400 | Extra: {'status_code': 400, 'content_length': 71}
+[2025-12-01 11:38:16] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:16] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:16] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:16] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:16] INFO         3       127.0.0.1  api.approve_expense - Request: POST /api/v1/expenses/1/approve | Extra: {'method': 'POST', 'path': '/api/v1/expenses/1/approve', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:16] INFO         3       127.0.0.1  api.approve_expense - Response: 403 | Extra: {'status_code': 403, 'content_length': 67}
+[2025-12-01 11:38:17] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:17] INFO         1       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:17] INFO         1       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:17] INFO         1       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 3153}
+[2025-12-01 11:38:17] INFO         1       127.0.0.1        api.get_users - Request: GET /api/v1/users | Extra: {'method': 'GET', 'path': '/api/v1/users', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:17] INFO         1       127.0.0.1        api.get_users - Response: 200 | Extra: {'status_code': 200, 'content_length': 762}
+[2025-12-01 11:38:18] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:18] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:18] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:18] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:18] INFO         3       127.0.0.1        api.get_users - Request: GET /api/v1/users | Extra: {'method': 'GET', 'path': '/api/v1/users', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:18] INFO         3       127.0.0.1        api.get_users - Response: 403 | Extra: {'status_code': 403, 'content_length': 44}
+[2025-12-01 11:38:18] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:18] INFO         1       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:18] INFO         1       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:18] INFO         1       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 3153}
+[2025-12-01 11:38:18] INFO         1       127.0.0.1      api.create_user - Request: POST /api/v1/users | Extra: {'method': 'POST', 'path': '/api/v1/users', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:18] INFO         1       127.0.0.1      api.create_user - Response: 201 | Extra: {'status_code': 201, 'content_length': 305}
+[2025-12-01 11:38:19] INFO     Anonymous       127.0.0.1           auth.login - Request: POST /login | Extra: {'method': 'POST', 'path': '/login', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:19] INFO         3       127.0.0.1           auth.login - Response: 302 | Extra: {'status_code': 302, 'content_length': 189}
+[2025-12-01 11:38:19] INFO         3       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:19] INFO         3       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 2920}
+[2025-12-01 11:38:19] INFO         3       127.0.0.1 api.get_stats_summary - Request: GET /api/v1/stats/summary | Extra: {'method': 'GET', 'path': '/api/v1/stats/summary', 'args': {}, 'user_agent': 'Werkzeug/3.0.1'}
+[2025-12-01 11:38:19] INFO         3       127.0.0.1 api.get_stats_summary - Response: 200 | Extra: {'status_code': 200, 'content_length': 102}
+[2025-12-01 11:47:40] INFO     Anonymous       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'curl/8.5.0'}
+[2025-12-01 11:47:40] INFO     Anonymous       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 1859}
+[2025-12-01 11:49:49] INFO     Anonymous       127.0.0.1                index - Request: GET / | Extra: {'method': 'GET', 'path': '/', 'args': {}, 'user_agent': 'curl/8.5.0'}
+[2025-12-01 11:49:49] INFO     Anonymous       127.0.0.1                index - Response: 200 | Extra: {'status_code': 200, 'content_length': 1859}
+[2025-12-01 11:53:06] WARNING  -  * Debugger is active!
+[2025-12-01 11:53:06] INFO     -  * Debugger PIN: 102-621-985
+[2025-12-01 11:53:35] INFO     -  * Detected change in '/home/jpalma/dev/rinde/expense-app/utils/error_handlers.py', reloading
+[2025-12-01 11:53:36] WARNING  -  * Debugger is active!
+[2025-12-01 11:53:36] INFO     -  * Debugger PIN: 102-621-985
+[2025-12-01 11:53:43] INFO     -  * Detected change in '/home/jpalma/dev/rinde/expense-app/utils/error_handlers.py', reloading
+[2025-12-01 11:53:43] WARNING  -  * Debugger is active!
+[2025-12-01 11:53:43] INFO     -  * Debugger PIN: 102-621-985
+[2025-12-01 11:54:58] INFO     - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.105:5000
+[2025-12-01 11:54:58] INFO     - [33mPress CTRL+C to quit[0m
+[2025-12-01 11:55:32] INFO     - Request: GET /
+[2025-12-01 11:55:32] INFO     - Response: 200
+[2025-12-01 11:55:32] INFO     - 127.0.0.1 - - [01/Dec/2025 11:55:32] "GET / HTTP/1.1" 200 -
+[2025-12-01 11:57:28] INFO     - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.105:5000
+[2025-12-01 11:57:28] INFO     - [33mPress CTRL+C to quit[0m
+[2025-12-01 11:57:56] INFO     - Request: GET /
+[2025-12-01 11:57:56] INFO     - Response: 200
+[2025-12-01 11:57:56] INFO     - 127.0.0.1 - - [01/Dec/2025 11:57:56] "GET / HTTP/1.1" 200 -
+[2025-12-01 11:57:59] INFO     - Request: GET /login
+[2025-12-01 11:57:59] INFO     - Response: 200
+[2025-12-01 11:57:59] INFO     - 127.0.0.1 - - [01/Dec/2025 11:57:59] "GET /login HTTP/1.1" 200 -
+[2025-12-01 11:58:00] INFO     - Request: GET /manifest.json
+[2025-12-01 11:58:00] INFO     - 127.0.0.1 - - [01/Dec/2025 11:58:00] "[35m[1mGET /manifest.json HTTP/1.1[0m" 500 -
+[2025-12-01 11:58:00] INFO     - Request: GET /favicon.ico
+[2025-12-01 11:58:00] INFO     - 127.0.0.1 - - [01/Dec/2025 11:58:00] "[35m[1mGET /favicon.ico HTTP/1.1[0m" 500 -
+[2025-12-01 11:58:10] INFO     - Request: POST /login
+[2025-12-01 11:58:10] INFO     - 127.0.0.1 - - [01/Dec/2025 11:58:10] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+[2025-12-01 11:58:10] INFO     - 127.0.0.1 - - [01/Dec/2025 11:58:10] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+[2025-12-01 11:58:10] INFO     - 127.0.0.1 - - [01/Dec/2025 11:58:10] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+[2025-12-01 11:58:10] INFO     - 127.0.0.1 - - [01/Dec/2025 11:58:10] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+[2025-12-01 11:58:10] INFO     - 127.0.0.1 - - [01/Dec/2025 11:58:10] "[36mGET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+[2025-12-01 12:05:52] INFO     -  * Detected change in '/home/jpalma/dev/rinde/expense-app/utils/error_handlers.py', reloading
+[2025-12-01 12:07:18] INFO     - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.105:5000
+[2025-12-01 12:07:18] INFO     - [33mPress CTRL+C to quit[0m
+[2025-12-01 12:07:30] INFO     - Request: GET /
+[2025-12-01 12:07:30] INFO     - Response: 200
+[2025-12-01 12:07:30] INFO     - 127.0.0.1 - - [01/Dec/2025 12:07:30] "GET / HTTP/1.1" 200 -
+[2025-12-01 12:08:00] INFO     - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.105:5000
+[2025-12-01 12:08:00] INFO     - [33mPress CTRL+C to quit[0m
+[2025-12-01 12:08:08] INFO     - The CSRF session token is missing.
+[2025-12-01 12:08:08] INFO     - Response: 400
+[2025-12-01 12:08:08] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:08] "[31m[1mPOST /login HTTP/1.1[0m" 400 -
+[2025-12-01 12:08:11] INFO     - Request: GET /manifest.json
+[2025-12-01 12:08:11] INFO     - Response: 404
+[2025-12-01 12:08:11] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:11] "[33mGET /manifest.json HTTP/1.1[0m" 404 -
+[2025-12-01 12:08:11] INFO     - Request: GET /favicon.ico
+[2025-12-01 12:08:11] INFO     - Response: 404
+[2025-12-01 12:08:11] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:11] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2025-12-01 12:08:12] INFO     - Request: GET /
+[2025-12-01 12:08:12] INFO     - Response: 200
+[2025-12-01 12:08:12] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:12] "GET / HTTP/1.1" 200 -
+[2025-12-01 12:08:13] INFO     - Request: GET /manifest.json
+[2025-12-01 12:08:13] INFO     - Response: 404
+[2025-12-01 12:08:13] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:13] "[33mGET /manifest.json HTTP/1.1[0m" 404 -
+[2025-12-01 12:08:14] INFO     - Request: GET /login
+[2025-12-01 12:08:14] INFO     - Response: 200
+[2025-12-01 12:08:14] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:14] "GET /login HTTP/1.1" 200 -
+[2025-12-01 12:08:14] INFO     - Request: GET /manifest.json
+[2025-12-01 12:08:14] INFO     - Response: 404
+[2025-12-01 12:08:14] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:14] "[33mGET /manifest.json HTTP/1.1[0m" 404 -
+[2025-12-01 12:08:25] INFO     - Request: POST /login
+[2025-12-01 12:08:25] INFO     - Response: 302
+[2025-12-01 12:08:25] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+[2025-12-01 12:08:25] INFO     - Request: GET /
+[2025-12-01 12:08:25] INFO     - Response: 200
+[2025-12-01 12:08:25] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:25] "GET / HTTP/1.1" 200 -
+[2025-12-01 12:08:25] INFO     - Request: GET /manifest.json
+[2025-12-01 12:08:25] INFO     - Response: 404
+[2025-12-01 12:08:25] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:25] "[33mGET /manifest.json HTTP/1.1[0m" 404 -
+[2025-12-01 12:08:30] INFO     - Request: GET /expenses/my
+[2025-12-01 12:08:30] INFO     - Response: 200
+[2025-12-01 12:08:30] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:30] "GET /expenses/my HTTP/1.1" 200 -
+[2025-12-01 12:08:30] INFO     - Request: GET /manifest.json
+[2025-12-01 12:08:30] INFO     - Response: 404
+[2025-12-01 12:08:30] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:30] "[33mGET /manifest.json HTTP/1.1[0m" 404 -
+[2025-12-01 12:08:33] INFO     - Request: GET /expenses/new
+[2025-12-01 12:08:33] INFO     - Response: 200
+[2025-12-01 12:08:33] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:33] "GET /expenses/new HTTP/1.1" 200 -
+[2025-12-01 12:08:33] INFO     - Request: GET /manifest.json
+[2025-12-01 12:08:33] INFO     - Response: 404
+[2025-12-01 12:08:33] INFO     - 127.0.0.1 - - [01/Dec/2025 12:08:33] "[33mGET /manifest.json HTTP/1.1[0m" 404 -

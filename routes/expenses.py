@@ -5,6 +5,7 @@ from extensions import db
 from models.expense import Expense
 from models.company import Company
 from services.ocr_service import process_receipt
+from utils.file_validators import validate_file_upload, generate_unique_filename, scan_file_for_malware, FileValidationError
 from datetime import datetime
 import os
 import json
@@ -89,18 +90,24 @@ def new():
         
         file = request.files['receipt']
         
-        if file.filename == '':
-            flash('No selected file', 'error')
-            return redirect(request.url)
+        try:
+            # Validación completa del archivo
+            file_info = validate_file_upload(file)
+            filename = generate_unique_filename(file.filename, current_user.id)
             
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            # Ensure unique filename to prevent overwrites
-            timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-            filename = f"{timestamp}_{filename}"
-
             filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
+            
+            # Escaneo de malware
+            is_clean, threat_info = scan_file_for_malware(filepath)
+            if not is_clean:
+                os.remove(filepath)  # Eliminar archivo sospechoso
+                flash(f'Archivo rechazado por seguridad: {threat_info}', 'error')
+                return redirect(request.url)
+                
+        except FileValidationError as e:
+            flash(str(e), 'error')
+            return redirect(request.url)
 
             # Procesar imagen con OCR
             ocr_data = None

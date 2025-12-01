@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from extensions import db
+from functools import wraps
+from extensions import db, limiter
 from models.expense import Expense
 from models.user import User
 from models.approval import Approval
@@ -10,6 +11,16 @@ from datetime import datetime
 from sqlalchemy import or_
 
 api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
+
+
+def api_login_required(f):
+    """Decorador para API que retorna 401 en lugar de redirect"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return api_response(error='Authentication required', status=401)
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def api_response(data=None, message=None, status=200, error=None):
@@ -72,7 +83,8 @@ def serialize_user(user):
 # ============= EXPENSES ENDPOINTS =============
 
 @api_bp.route('/expenses', methods=['GET'])
-@login_required
+@api_login_required
+@limiter.limit("30 per minute")
 def get_expenses():
     """
     GET /api/v1/expenses
@@ -117,7 +129,7 @@ def get_expenses():
 
 
 @api_bp.route('/expenses/<int:expense_id>', methods=['GET'])
-@login_required
+@api_login_required
 def get_expense(expense_id):
     """GET /api/v1/expenses/<id>"""
     expense = Expense.query.get_or_404(expense_id)
@@ -130,7 +142,8 @@ def get_expense(expense_id):
 
 
 @api_bp.route('/expenses', methods=['POST'])
-@login_required
+@api_login_required
+@limiter.limit("10 per minute")
 def create_expense():
     """
     POST /api/v1/expenses
@@ -172,7 +185,7 @@ def create_expense():
 
 
 @api_bp.route('/expenses/<int:expense_id>', methods=['PUT'])
-@login_required
+@api_login_required
 def update_expense(expense_id):
     """PUT /api/v1/expenses/<id>"""
     expense = Expense.query.get_or_404(expense_id)
@@ -208,7 +221,7 @@ def update_expense(expense_id):
 
 
 @api_bp.route('/expenses/<int:expense_id>', methods=['DELETE'])
-@login_required
+@api_login_required
 def delete_expense(expense_id):
     """DELETE /api/v1/expenses/<id>"""
     expense = Expense.query.get_or_404(expense_id)
@@ -233,7 +246,7 @@ def delete_expense(expense_id):
 # ============= APPROVALS ENDPOINTS =============
 
 @api_bp.route('/expenses/<int:expense_id>/approve', methods=['POST'])
-@login_required
+@api_login_required
 def approve_expense(expense_id):
     """POST /api/v1/expenses/<id>/approve"""
     if current_user.role not in ['supervisor', 'admin']:
@@ -271,7 +284,7 @@ def approve_expense(expense_id):
 
 
 @api_bp.route('/expenses/<int:expense_id>/reject', methods=['POST'])
-@login_required
+@api_login_required
 def reject_expense(expense_id):
     """POST /api/v1/expenses/<id>/reject"""
     if current_user.role not in ['supervisor', 'admin']:
@@ -314,7 +327,7 @@ def reject_expense(expense_id):
 # ============= USERS ENDPOINTS (Admin only) =============
 
 @api_bp.route('/users', methods=['GET'])
-@login_required
+@api_login_required
 def get_users():
     """GET /api/v1/users (Admin only)"""
     if current_user.role != 'admin':
@@ -325,7 +338,7 @@ def get_users():
 
 
 @api_bp.route('/users/<int:user_id>', methods=['GET'])
-@login_required
+@api_login_required
 def get_user(user_id):
     """GET /api/v1/users/<id>"""
     if current_user.role != 'admin' and current_user.id != user_id:
@@ -336,7 +349,7 @@ def get_user(user_id):
 
 
 @api_bp.route('/users', methods=['POST'])
-@login_required
+@api_login_required
 def create_user():
     """POST /api/v1/users (Admin only)"""
     if current_user.role != 'admin':
@@ -379,7 +392,7 @@ def create_user():
 # ============= STATS ENDPOINTS =============
 
 @api_bp.route('/stats/summary', methods=['GET'])
-@login_required
+@api_login_required
 def get_stats_summary():
     """GET /api/v1/stats/summary"""
     if current_user.role == 'admin':
@@ -412,7 +425,7 @@ def get_stats_summary():
 # ============= COMPANIES/CLIENTS ENDPOINTS =============
 
 @api_bp.route('/clients', methods=['GET'])
-@login_required
+@api_login_required
 def get_clients():
     """GET /api/v1/clients"""
     clients = Company.query.filter_by(is_active=True).all()
@@ -428,7 +441,7 @@ def get_clients():
 # ============= CATEGORIES ENDPOINTS =============
 
 @api_bp.route('/categories', methods=['GET'])
-@login_required
+@api_login_required
 def get_categories():
     """GET /api/v1/categories"""
     categories = ExpenseCategory.query.filter_by(is_active=True).all()

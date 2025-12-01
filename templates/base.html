@@ -65,6 +65,9 @@
     </main>
 
     {% block scripts %}{% endblock %}
+    
+    <!-- CSRF Token -->
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 </body>
 
 </html>

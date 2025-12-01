@@ -4,6 +4,7 @@
 <h1 class="text-2xl font-bold mb-6">{% if user %}Editar{% else %}Nuevo{% endif %} Usuario</h1>
 
 <form method="POST" class="bg-white p-6 rounded-lg shadow max-w-2xl">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
             <label class="block text-sm font-medium text-gray-700">Nombre</label>

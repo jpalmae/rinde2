@@ -11,6 +11,12 @@ class Area(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     users = db.relationship('User', backref='area', lazy='dynamic')
+    
+    # Índices para rendimiento
+    __table_args__ = (
+        db.Index('idx_area_name', 'name'),
+        db.Index('idx_area_is_active', 'is_active'),
+    )
 
 class Company(db.Model): # Mapped to 'clients' table in schema
     __tablename__ = 'clients'
@@ -26,6 +32,14 @@ class Company(db.Model): # Mapped to 'clients' table in schema
     created_with_expense = db.Column(db.Boolean, default=False)  # Creado desde formulario de gasto
 
     expenses = db.relationship('Expense', backref='client', lazy='dynamic')
+    
+    # Índices para rendimiento
+    __table_args__ = (
+        db.Index('idx_client_rut', 'rut'),
+        db.Index('idx_client_status', 'status'),
+        db.Index('idx_client_created_by', 'created_by'),
+        db.Index('idx_client_is_active', 'is_active'),
+    )
 
 class ExpenseCategory(db.Model):
     __tablename__ = 'expense_categories'
@@ -35,3 +49,9 @@ class ExpenseCategory(db.Model):
     requires_client = db.Column(db.Boolean, default=False)
     max_amount = db.Column(db.Numeric(10, 2))
     is_active = db.Column(db.Boolean, default=True)
+    
+    # Índices para rendimiento
+    __table_args__ = (
+        db.Index('idx_category_name', 'name'),
+        db.Index('idx_category_is_active', 'is_active'),
+    )

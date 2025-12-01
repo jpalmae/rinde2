@@ -2,7 +2,7 @@ import os
 from datetime import timedelta
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(32).hex()
     
     # Database
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \

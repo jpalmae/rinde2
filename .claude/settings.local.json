@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(cat:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(mkdir:*)",
+      "Bash(source:*)",
+      "Bash(sqlite3:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

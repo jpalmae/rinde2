@@ -32,3 +32,12 @@ class User(UserMixin, db.Model):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    # Índices para rendimiento
+    __table_args__ = (
+        db.Index('idx_user_email', 'email'),
+        db.Index('idx_user_role', 'role'),
+        db.Index('idx_user_area_id', 'area_id'),
+        db.Index('idx_user_supervisor_id', 'supervisor_id'),
+        db.Index('idx_user_is_active', 'is_active'),
+    )

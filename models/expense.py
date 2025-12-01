@@ -21,3 +21,13 @@ class Expense(db.Model):
     ocr_data = db.Column(db.JSON)
 
     approvals = db.relationship('Approval', backref='expense', lazy='dynamic')
+    
+    # Índices para rendimiento
+    __table_args__ = (
+        db.Index('idx_expense_user_id', 'user_id'),
+        db.Index('idx_expense_client_id', 'client_id'),
+        db.Index('idx_expense_status', 'status'),
+        db.Index('idx_expense_created_at', 'created_at'),
+        db.Index('idx_expense_date', 'expense_date'),
+        db.Index('idx_expense_user_status', 'user_id', 'status'),
+    )

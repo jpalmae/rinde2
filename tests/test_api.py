@@ -5,6 +5,7 @@ import pytest
 import json
 from models.user import User
 from models.expense import Expense
+from models.company import Company
 from datetime import datetime
 
 
@@ -52,6 +53,9 @@ class TestExpensesAPI:
         with client:
             login(client, 'user@test.com', 'user123')
 
+        with app.app_context():
+            company = Company.query.first()
+
             expense_data = {
                 'amount': 10000,
                 'category': 'Transporte',
@@ -59,7 +63,8 @@ class TestExpensesAPI:
                 'receipt_image': 'test.jpg',
                 'latitude': -33.4489,
                 'longitude': -70.6693,
-                'expense_date': datetime.now().isoformat()
+                'expense_date': datetime.now().isoformat(),
+                'client_id': company.id
             }
 
             response = client.post('/api/v1/expenses',
@@ -97,8 +102,10 @@ class TestExpensesAPI:
 
                 # Crear gasto
                 user = User.query.filter_by(email="user@test.com").first()
+                client_obj = Company.query.first()
                 expense = Expense(
                     user_id=user.id,
+                    client_id=client_obj.id,
                     amount=10000,
                     category="Transporte",
                     reason="Test",
@@ -125,8 +132,10 @@ class TestExpensesAPI:
                 from extensions import db
 
                 user = User.query.filter_by(email="user@test.com").first()
+                client_obj = Company.query.first()
                 expense = Expense(
                     user_id=user.id,
+                    client_id=client_obj.id,
                     amount=10000,
                     category="Transporte",
                     reason="Test",
@@ -160,8 +169,10 @@ class TestExpensesAPI:
                 from extensions import db
 
                 user = User.query.filter_by(email="user@test.com").first()
+                client_obj = Company.query.first()
                 expense = Expense(
                     user_id=user.id,
+                    client_id=client_obj.id,
                     amount=10000,
                     category="Transporte",
                     reason="Test",
@@ -191,8 +202,10 @@ class TestApprovalsAPI:
                 from extensions import db
 
                 user = User.query.filter_by(email="user@test.com").first()
+                client_obj = Company.query.first()
                 expense = Expense(
                     user_id=user.id,
+                    client_id=client_obj.id,
                     amount=10000,
                     category="Transporte",
                     reason="Test",
@@ -225,8 +238,10 @@ class TestApprovalsAPI:
                 from extensions import db
 
                 user = User.query.filter_by(email="user@test.com").first()
+                client_obj = Company.query.first()
                 expense = Expense(
                     user_id=user.id,
+                    client_id=client_obj.id,
                     amount=10000,
                     category="Transporte",
                     reason="Test",
@@ -255,8 +270,10 @@ class TestApprovalsAPI:
                 from extensions import db
 
                 user = User.query.filter_by(email="user@test.com").first()
+                client_obj = Company.query.first()
                 expense = Expense(
                     user_id=user.id,
+                    client_id=client_obj.id,
                     amount=10000,
                     category="Transporte",
                     reason="Test",

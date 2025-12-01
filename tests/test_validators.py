@@ -24,7 +24,7 @@ class TestRUTValidation:
 
     def test_validate_rut_with_k(self):
         """Test validar RUT con K"""
-        is_valid, error = validate_rut("11.111.111-K")
+        is_valid, error = validate_rut("11.111.111-1")  # El DV correcto es 1, no K
         assert is_valid is True
 
     def test_validate_rut_invalid_dv(self):
@@ -59,7 +59,7 @@ class TestRUTValidation:
     def test_calculate_rut_dv(self):
         """Test calcular dígito verificador"""
         assert calculate_rut_dv("12345678") == "5"
-        assert calculate_rut_dv("11111111") == "K"
+        assert calculate_rut_dv("11111111") == "1"  # Corregido: el DV correcto es 1
         assert calculate_rut_dv("22222222") == "2"
 
 

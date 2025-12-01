@@ -1,0 +1,7 @@
+[2025-12-01 11:58:10] ERROR    - Database Error: (sqlite3.OperationalError) no such table: users
+[SQL: SELECT users.id AS users_id, users.email AS users_email, users.password_hash AS users_password_hash, users.first_name AS users_first_name, users.last_name AS users_last_name, users.role AS users_role, users.area_id AS users_area_id, users.supervisor_id AS users_supervisor_id, users.is_active AS users_is_active, users.created_at AS users_created_at, users.last_login AS users_last_login 
+FROM users 
+WHERE users.email = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('admin@sixmanager.com', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)

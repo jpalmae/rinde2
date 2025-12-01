@@ -5,6 +5,7 @@
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Nuevo Gasto</h1>
 
     <form id="expense-form" action="{{ url_for('expenses.new') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow space-y-5">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
         <!-- Foto del comprobante -->
         <div>

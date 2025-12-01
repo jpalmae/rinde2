@@ -5,6 +5,7 @@ from models.expense import Expense
 from models.approval import Approval
 from models.user import User
 from datetime import datetime
+from sqlalchemy.orm import joinedload
 
 approvals_bp = Blueprint('approvals', __name__, url_prefix='/approvals')
 
@@ -48,12 +49,18 @@ def pending():
     # Obtener gastos pendientes que el usuario puede aprobar
     if current_user.role == 'admin':
         # Admin ve todos los gastos pendientes
-        query = Expense.query.filter_by(status='pending')
+        query = Expense.query.options(
+            joinedload(Expense.user),
+            joinedload(Expense.client)
+        ).filter_by(status='pending')
     else:
         # Supervisor ve solo gastos de sus subordinados
         subordinates = User.query.filter_by(supervisor_id=current_user.id).all()
         subordinate_ids = [sub.id for sub in subordinates]
-        query = Expense.query.filter(
+        query = Expense.query.options(
+            joinedload(Expense.user),
+            joinedload(Expense.client)
+        ).filter(
             Expense.user_id.in_(subordinate_ids),
             Expense.status == 'pending'
         )

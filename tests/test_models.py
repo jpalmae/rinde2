@@ -48,8 +48,10 @@ class TestExpenseModel:
             from extensions import db
 
             user = User.query.filter_by(email="user@test.com").first()
+            client = Company.query.first()
             expense = Expense(
                 user_id=user.id,
+                client_id=client.id,
                 amount=10000,
                 category="Transporte",
                 reason="Taxi al cliente",
