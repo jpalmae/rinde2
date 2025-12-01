@@ -1,150 +1,260 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-lg mx-auto" x-data="expenseForm()">
+<div class="max-w-2xl mx-auto">
     <h1 class="text-2xl font-bold mb-6 text-gray-800">Nuevo Gasto</h1>
 
-    <form id="expense-form" action="{{ url_for('expenses.new') }}" method="POST" enctype="multipart/form-data"
-        class="space-y-4 bg-white p-6 rounded-lg shadow" @submit="validateForm">
+    <form id="expense-form" action="{{ url_for('expenses.new') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow space-y-5">
 
-        <!-- Captura de Foto -->
-        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:bg-gray-50 transition">
-            <input type="file" id="receipt" name="receipt" accept="image/*" capture="camera" required class="hidden"
-                @change="previewImage">
-            <label for="receipt" class="cursor-pointer block">
-                <div x-show="!imagePreview">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <p class="mt-2 text-sm text-gray-600">Tomar foto del comprobante</p>
+        <!-- Foto del comprobante -->
+        <div>
+            <label for="receipt" class="block text-sm font-medium text-gray-700 mb-1">Foto del Comprobante *</label>
+            <input type="file" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                   id="receipt" name="receipt" accept="image/*" capture="camera" required>
+            <div id="imagePreview" class="mt-2"></div>
+        </div>
+
+        <!-- Cliente -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Cliente * <span class="text-gray-500 text-xs">(obligatorio)</span></label>
+
+            <div class="space-y-3">
+                <div class="flex items-center">
+                    <input type="radio" name="client_option" id="existing_client" value="existing" checked onchange="toggleClientFields()"
+                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                    <label for="existing_client" class="ml-2 block text-sm text-gray-700 cursor-pointer" id="existing_label">
+                        Seleccionar cliente existente
+                    </label>
                 </div>
-                <img x-show="imagePreview" :src="imagePreview" class="max-w-full h-auto rounded mx-auto"
-                    style="display: none;">
-            </label>
+
+                <div id="existing_client_field">
+                    <select name="client_id" id="client_id" class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Seleccionar cliente...</option>
+                        {% for client in clients %}
+                        <option value="{{ client.id }}">
+                            {{ client.name }} ({{ client.rut }})
+                            {% if client.status == 'pending' %} - ⏳ Pendiente{% endif %}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="flex items-center">
+                    <input type="radio" name="client_option" id="new_client" value="new" onchange="toggleClientFields()"
+                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                    <label for="new_client" class="ml-2 block text-sm text-gray-700 cursor-pointer" id="new_label">
+                        Crear cliente nuevo
+                    </label>
+                </div>
+
+                <div id="new_client_fields" style="display: none;" class="bg-gray-50 border border-gray-200 rounded-md p-4 space-y-3">
+                    <input type="hidden" name="create_new_client" id="create_new_client" value="false">
+
+                    <div>
+                        <label for="new_client_rut" class="block text-sm font-medium text-gray-700 mb-1">RUT del Cliente *</label>
+                        <input type="text" id="new_client_rut" name="new_client_rut" placeholder="12.345.678-9"
+                               class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-blue-500 focus:ring-blue-500">
+                        <p class="text-xs text-gray-500 mt-1">Formato: XX.XXX.XXX-X</p>
+                    </div>
+
+                    <div>
+                        <label for="new_client_name" class="block text-sm font-medium text-gray-700 mb-1">Nombre del Cliente *</label>
+                        <input type="text" id="new_client_name" name="new_client_name" placeholder="Empresa SpA"
+                               class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label for="new_client_email" class="block text-sm font-medium text-gray-700 mb-1">Email de Contacto</label>
+                        <input type="email" id="new_client_email" name="new_client_email" placeholder="contacto@empresa.cl"
+                               class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-400 p-3">
+                        <p class="text-sm text-blue-700">
+                            <strong>Nota:</strong> El cliente nuevo debe ser aprobado por un administrador antes de que se pueda aprobar el gasto.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Monto -->
         <div>
-            <label class="block text-sm font-medium text-gray-700">Monto (CLP)</label>
-            <input type="number" name="amount" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm 
-                          focus:border-blue-500 focus:ring-blue-500 border p-2">
+            <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Monto (CLP) *</label>
+            <input type="number" id="amount" name="amount" required min="0" step="1" placeholder="10000"
+                   class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-blue-500 focus:ring-blue-500">
         </div>
 
         <!-- Categoría -->
         <div>
-            <label class="block text-sm font-medium text-gray-700">Categoría</label>
-            <select name="category" required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 bg-white">
+            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoría *</label>
+            <select name="category" id="category" required
+                    class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-blue-500 focus:ring-blue-500">
                 <option value="">Seleccionar...</option>
-                <option value="transporte">Transporte</option>
-                <option value="alimentacion">Alimentación</option>
-                <option value="hospedaje">Hospedaje</option>
-                <option value="materiales">Materiales</option>
-                <option value="otros">Otros</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Alimentación">Alimentación</option>
+                <option value="Hospedaje">Hospedaje</option>
+                <option value="Materiales">Materiales</option>
+                <option value="Otros">Otros</option>
             </select>
         </div>
 
-        <!-- Cliente (Opcional) -->
+        <!-- Razón -->
         <div>
-            <label class="block text-sm font-medium text-gray-700">Cliente</label>
-            <select name="client_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 bg-white">
-                <option value="">Sin cliente específico</option>
-                {% for client in clients %}
-                <option value="{{ client.id }}">{{ client.name }}</option>
-                {% endfor %}
-            </select>
+            <label for="reason" class="block text-sm font-medium text-gray-700 mb-1">Motivo del Gasto *</label>
+            <textarea name="reason" id="reason" rows="3" required placeholder="Describe el motivo del gasto..."
+                      class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-blue-500 focus:ring-blue-500"></textarea>
         </div>
 
-        <!-- Motivo -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700">Motivo del gasto</label>
-            <textarea name="reason" rows="3" required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2"></textarea>
+        <!-- Geolocalización -->
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+
+        <div id="location-status" class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div class="flex items-center">
+                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-yellow-700 mr-3"></div>
+                <p class="text-sm text-yellow-700"><strong>Obteniendo ubicación...</strong></p>
+            </div>
         </div>
 
-        <!-- Geolocalización (oculto) -->
-        <input type="hidden" name="latitude" x-model="latitude">
-        <input type="hidden" name="longitude" x-model="longitude">
-
-        <!-- Estado de Ubicación -->
-        <div class="text-sm p-2 rounded"
-            :class="locationError ? 'bg-red-100 text-red-700' : (latitude ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700')">
-            <p x-text="locationStatus"></p>
-            <button type="button" x-show="locationError" @click="getLocation()"
-                class="underline mt-1">Reintentar</button>
+        <!-- Botones -->
+        <div class="space-y-2 pt-2">
+            <button type="submit" id="submit-btn" disabled
+                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed">
+                Registrar Gasto
+            </button>
+            <a href="{{ url_for('expenses.my_expenses') }}" class="block w-full text-center bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition">
+                Cancelar
+            </a>
         </div>
-
-        <!-- Botón Submit -->
-        <button type="submit"
-            class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 
-                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
-            Registrar Gasto
-        </button>
     </form>
 </div>
 
 <script>
-    function expenseForm() {
-        return {
-            imagePreview: null,
-            latitude: null,
-            longitude: null,
-            locationStatus: 'Obteniendo ubicación...',
-            locationError: false,
+// Toggle entre cliente existente y nuevo
+function toggleClientFields() {
+    const existingSelected = document.getElementById('existing_client').checked;
+    const existingField = document.getElementById('existing_client_field');
+    const newFields = document.getElementById('new_client_fields');
+    const createNewInput = document.getElementById('create_new_client');
+    const clientSelect = document.getElementById('client_id');
+    const newClientInputs = ['new_client_rut', 'new_client_name'];
+    const existingLabel = document.getElementById('existing_label');
+    const newLabel = document.getElementById('new_label');
 
-            init() {
-                this.getLocation();
-            },
+    if (existingSelected) {
+        existingField.style.display = 'block';
+        newFields.style.display = 'none';
+        createNewInput.value = 'false';
+        clientSelect.required = true;
+        existingLabel.classList.add('font-semibold');
+        newLabel.classList.remove('font-semibold');
 
-            previewImage(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        this.imagePreview = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            },
+        newClientInputs.forEach(id => {
+            document.getElementById(id).required = false;
+        });
+    } else {
+        existingField.style.display = 'none';
+        newFields.style.display = 'block';
+        createNewInput.value = 'true';
+        clientSelect.required = false;
+        clientSelect.value = '';
+        existingLabel.classList.remove('font-semibold');
+        newLabel.classList.add('font-semibold');
 
-            getLocation() {
-                this.locationStatus = 'Obteniendo ubicación...';
-                this.locationError = false;
+        newClientInputs.forEach(id => {
+            document.getElementById(id).required = true;
+        });
+    }
+}
 
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            this.latitude = position.coords.latitude;
-                            this.longitude = position.coords.longitude;
-                            this.locationStatus = 'Ubicación obtenida correctamente';
-                            this.locationError = false;
-                        },
-                        (error) => {
-                            console.log('Error getting location:', error);
-                            this.locationStatus = 'Error: No se pudo obtener la ubicación. Es obligatoria.';
-                            this.locationError = true;
-                            this.latitude = null;
-                            this.longitude = null;
-                        },
-                        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-                    );
-                } else {
-                    this.locationStatus = 'Error: Tu navegador no soporta geolocalización.';
-                    this.locationError = true;
-                }
-            },
+// Preview de imagen
+document.getElementById('receipt').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '<img src="' + e.target.result + '" class="rounded-lg mt-2 max-h-64 mx-auto">';
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
-            validateForm(event) {
-                if (!this.latitude || !this.longitude) {
-                    event.preventDefault();
-                    alert('La ubicación es obligatoria. Por favor, asegúrate de permitir el acceso a la ubicación y vuelve a intentarlo.');
-                    this.getLocation(); // Retry
-                }
-            }
+// Geolocalización
+let locationObtained = false;
+
+function getLocation() {
+    const statusDiv = document.getElementById('location-status');
+    const submitBtn = document.getElementById('submit-btn');
+
+    if (!navigator.geolocation) {
+        statusDiv.className = 'bg-red-50 border-l-4 border-red-400 p-4';
+        statusDiv.innerHTML = '<p class="text-sm text-red-700"><strong>Error:</strong> Tu navegador no soporta geolocalización.</p>';
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            document.getElementById('latitude').value = position.coords.latitude;
+            document.getElementById('longitude').value = position.coords.longitude;
+
+            statusDiv.className = 'bg-green-50 border-l-4 border-green-400 p-4';
+            statusDiv.innerHTML = '<p class="text-sm text-green-700"><strong>✓ Ubicación obtenida correctamente</strong></p>';
+
+            locationObtained = true;
+            submitBtn.disabled = false;
+        },
+        function(error) {
+            console.error('Error getting location:', error);
+            statusDiv.className = 'bg-red-50 border-l-4 border-red-400 p-4';
+            statusDiv.innerHTML = `
+                <p class="text-sm text-red-700 mb-2"><strong>Error al obtener ubicación:</strong> ${error.message}</p>
+                <p class="text-xs text-red-600 mb-2">La geolocalización es obligatoria. Asegúrate de permitir el acceso a la ubicación.</p>
+                <button type="button" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600" onclick="getLocation()">Reintentar</button>
+            `;
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+    );
+}
+
+// Validación del formulario
+document.getElementById('expense-form').addEventListener('submit', function(e) {
+    if (!locationObtained) {
+        e.preventDefault();
+        alert('La ubicación es obligatoria. Por favor, permite el acceso a la ubicación y vuelve a intentarlo.');
+        getLocation();
+        return false;
+    }
+
+    const existingSelected = document.getElementById('existing_client').checked;
+
+    if (existingSelected) {
+        const clientId = document.getElementById('client_id').value;
+        if (!clientId) {
+            e.preventDefault();
+            alert('Debes seleccionar un cliente o crear uno nuevo.');
+            return false;
+        }
+    } else {
+        const rut = document.getElementById('new_client_rut').value;
+        const name = document.getElementById('new_client_name').value;
+        if (!rut || !name) {
+            e.preventDefault();
+            alert('Debes completar los datos del nuevo cliente (RUT y Nombre son obligatorios).');
+            return false;
         }
     }
+
+    return true;
+});
+
+// Inicializar
+document.getElementById('existing_label').classList.add('font-semibold');
+getLocation();
 </script>
 {% endblock %}

@@ -105,6 +105,15 @@ def approve(expense_id):
         flash('Este gasto ya fue procesado.', 'warning')
         return redirect(url_for('approvals.pending'))
 
+    # NUEVO: Verificar estado del cliente
+    if expense.client and expense.client.status == 'pending':
+        flash(f'No se puede aprobar este gasto. El cliente "{expense.client.name}" aún está pendiente de aprobación.', 'error')
+        return redirect(url_for('approvals.pending'))
+
+    if expense.client and expense.client.status == 'rejected':
+        flash(f'No se puede aprobar este gasto. El cliente "{expense.client.name}" fue rechazado.', 'error')
+        return redirect(url_for('approvals.pending'))
+
     comments = request.form.get('comments', '')
 
     # Crear aprobación

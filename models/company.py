@@ -19,11 +19,12 @@ class Company(db.Model): # Mapped to 'clients' table in schema
     rut = db.Column(db.String(20), unique=True, nullable=False)
     name = db.Column(db.String(100), nullable=False)
     contact_email = db.Column(db.String(120))
-    status = db.Column(db.String(20), default='active') # pending, active, rejected
+    status = db.Column(db.String(20), default='pending') # pending, active, rejected
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
-    is_active = db.Column(db.Boolean, default=True)
+    is_active = db.Column(db.Boolean, default=False)  # False hasta aprobación
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
+    created_with_expense = db.Column(db.Boolean, default=False)  # Creado desde formulario de gasto
+
     expenses = db.relationship('Expense', backref='client', lazy='dynamic')
 
 class ExpenseCategory(db.Model):

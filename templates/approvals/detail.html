@@ -3,78 +3,96 @@
 {% block title %}Detalle de Gasto #{{ expense.id }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Detalle de Gasto #{{ expense.id }}</h2>
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Detalle de Gasto #{{ expense.id }}</h1>
 
-    <div class="card mt-3">
-        <div class="card-header">
-            <h5>Información del Gasto</h5>
+    <div class="bg-white shadow rounded-lg overflow-hidden mb-6">
+        <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-700">Información del Gasto</h2>
         </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Empleado:</strong> {{ expense.user.full_name }} ({{ expense.user.email }})</p>
-                    <p><strong>Área:</strong> {{ expense.user.area.name if expense.user.area else 'N/A' }}</p>
-                    <p><strong>Fecha del Gasto:</strong> {{ expense.expense_date.strftime('%d/%m/%Y') }}</p>
-                    <p><strong>Fecha de Creación:</strong> {{ expense.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
-                    <p><strong>Estado:</strong>
-                        <span class="badge
-                            {% if expense.status == 'pending' %}bg-warning
-                            {% elif expense.status == 'approved' %}bg-success
-                            {% elif expense.status == 'rejected' %}bg-danger
-                            {% elif expense.status == 'reimbursed' %}bg-info
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <p class="text-sm"><span class="font-medium text-gray-700">Empleado:</span> <span class="text-gray-900">{{ expense.user.full_name }}</span> <span class="text-gray-500">({{ expense.user.email }})</span></p>
+                    <p class="text-sm"><span class="font-medium text-gray-700">Área:</span> <span class="text-gray-900">{{ expense.user.area.name if expense.user.area else 'N/A' }}</span></p>
+                    <p class="text-sm"><span class="font-medium text-gray-700">Fecha del Gasto:</span> <span class="text-gray-900">{{ expense.expense_date.strftime('%d/%m/%Y') }}</span></p>
+                    <p class="text-sm"><span class="font-medium text-gray-700">Fecha de Creación:</span> <span class="text-gray-900">{{ expense.created_at.strftime('%d/%m/%Y %H:%M') }}</span></p>
+                    <p class="text-sm">
+                        <span class="font-medium text-gray-700">Estado:</span>
+                        <span class="inline-flex px-2 text-xs leading-5 font-semibold rounded-full
+                            {% if expense.status == 'pending' %}bg-yellow-100 text-yellow-800
+                            {% elif expense.status == 'approved' %}bg-green-100 text-green-800
+                            {% elif expense.status == 'rejected' %}bg-red-100 text-red-800
+                            {% elif expense.status == 'reimbursed' %}bg-blue-100 text-blue-800
                             {% endif %}">
-                            {{ expense.status }}
+                            {{ expense.status|title }}
                         </span>
                     </p>
                 </div>
-                <div class="col-md-6">
-                    <p><strong>Categoría:</strong> {{ expense.category }}</p>
-                    <p><strong>Monto:</strong> ${{ "{:,.0f}".format(expense.amount) }}</p>
-                    <p><strong>Cliente:</strong> {{ expense.client.name if expense.client else 'N/A' }}</p>
-                    <p><strong>Razón:</strong> {{ expense.reason }}</p>
+                <div class="space-y-3">
+                    <p class="text-sm"><span class="font-medium text-gray-700">Categoría:</span> <span class="text-gray-900">{{ expense.category }}</span></p>
+                    <p class="text-sm"><span class="font-medium text-gray-700">Monto:</span> <span class="text-lg font-bold text-gray-900">${{ "{:,.0f}".format(expense.amount).replace(',', '.') }}</span></p>
+                    <p class="text-sm">
+                        <span class="font-medium text-gray-700">Cliente:</span>
+                        {% if expense.client %}
+                            <span class="text-gray-900">{{ expense.client.name }} ({{ expense.client.rut }})</span>
+                            {% if expense.client.status == 'pending' %}
+                                <span class="inline-flex px-2 text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 ml-1">Pendiente</span>
+                            {% elif expense.client.status == 'rejected' %}
+                                <span class="inline-flex px-2 text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 ml-1">Rechazado</span>
+                            {% elif expense.client.status == 'active' %}
+                                <span class="inline-flex px-2 text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 ml-1">Activo</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="text-gray-500">N/A</span>
+                        {% endif %}
+                    </p>
+                    <p class="text-sm"><span class="font-medium text-gray-700">Razón:</span> <span class="text-gray-900">{{ expense.reason }}</span></p>
                     {% if expense.latitude and expense.longitude %}
-                    <p><strong>Ubicación:</strong>
-                        <a href="https://www.google.com/maps?q={{ expense.latitude }},{{ expense.longitude }}"
-                           target="_blank">Ver en mapa</a>
+                    <p class="text-sm">
+                        <span class="font-medium text-gray-700">Ubicación:</span>
+                        <a href="https://www.google.com/maps?q={{ expense.latitude }},{{ expense.longitude }}" target="_blank" class="text-blue-600 hover:text-blue-800 underline">Ver en mapa</a>
                     </p>
                     {% endif %}
                 </div>
             </div>
 
             {% if expense.ocr_data %}
-            <div class="mt-3">
-                <h6>Datos OCR Extraídos:</h6>
-                <p><strong>Confianza:</strong> {{ expense.ocr_data.confidence }}</p>
-                {% if expense.ocr_data.suggested_amount %}
-                <p><strong>Monto detectado:</strong> ${{ "{:,.0f}".format(expense.ocr_data.suggested_amount) }}</p>
-                {% endif %}
-                {% if expense.ocr_data.date %}
-                <p><strong>Fecha detectada:</strong> {{ expense.ocr_data.date }}</p>
-                {% endif %}
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Datos OCR Extraídos:</h3>
+                <div class="bg-gray-50 rounded p-4 space-y-2 text-sm">
+                    <p><span class="font-medium text-gray-700">Confianza:</span> <span class="text-gray-900">{{ expense.ocr_data.confidence }}</span></p>
+                    {% if expense.ocr_data.suggested_amount %}
+                    <p><span class="font-medium text-gray-700">Monto detectado:</span> <span class="text-gray-900">${{ "{:,.0f}".format(expense.ocr_data.suggested_amount).replace(',', '.') }}</span></p>
+                    {% endif %}
+                    {% if expense.ocr_data.date %}
+                    <p><span class="font-medium text-gray-700">Fecha detectada:</span> <span class="text-gray-900">{{ expense.ocr_data.date }}</span></p>
+                    {% endif %}
+                </div>
             </div>
             {% endif %}
 
-            <div class="mt-3">
-                <h6>Recibo:</h6>
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Recibo:</h3>
                 <img src="{{ url_for('static', filename='uploads/' + expense.receipt_image) }}"
-                     alt="Recibo" class="img-fluid" style="max-width: 500px;">
+                     alt="Recibo" class="rounded-lg shadow max-w-full md:max-w-lg">
             </div>
 
             {% if expense.approvals.count() > 0 %}
-            <div class="mt-3">
-                <h6>Historial de Aprobaciones:</h6>
-                <ul class="list-group">
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Historial de Aprobaciones:</h3>
+                <ul class="divide-y divide-gray-200 border border-gray-200 rounded-md">
                     {% for approval in expense.approvals %}
-                    <li class="list-group-item">
-                        <strong>{{ approval.approver.full_name }}</strong>
-                        <span class="badge {% if approval.action == 'approved' %}bg-success{% else %}bg-danger{% endif %}">
-                            {{ approval.action }}
-                        </span>
-                        <br>
-                        <small>{{ approval.created_at.strftime('%d/%m/%Y %H:%M') }}</small>
+                    <li class="px-4 py-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium text-gray-900">{{ approval.approver.full_name }}</span>
+                            <span class="inline-flex px-2 text-xs leading-5 font-semibold rounded-full {% if approval.action == 'approved' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                {{ approval.action|title }}
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">{{ approval.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
                         {% if approval.comments %}
-                        <br><em>{{ approval.comments }}</em>
+                        <p class="text-sm text-gray-600 mt-2 italic">{{ approval.comments }}</p>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -85,32 +103,77 @@
     </div>
 
     {% if expense.status == 'pending' %}
-    <div class="card mt-3">
-        <div class="card-header">
-            <h5>Acciones</h5>
+    <div class="bg-white shadow rounded-lg overflow-hidden mb-6">
+        <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-700">Acciones</h2>
         </div>
-        <div class="card-body">
-            <form method="POST" action="{{ url_for('approvals.approve', expense_id=expense.id) }}" class="d-inline">
-                <div class="mb-3">
-                    <label for="approve_comments" class="form-label">Comentarios (opcional):</label>
-                    <textarea name="comments" id="approve_comments" class="form-control" rows="2"></textarea>
+        <div class="p-6">
+            {% if expense.client and expense.client.status == 'pending' %}
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700">
+                            <strong>Advertencia:</strong> Este gasto no puede ser aprobado porque el cliente "{{ expense.client.name }}" aún está pendiente de aprobación.
+                        </p>
+                        {% if current_user.role == 'admin' %}
+                        <p class="mt-2">
+                            <a href="{{ url_for('admin.clients_approvals') }}" class="text-sm font-medium text-yellow-800 hover:text-yellow-900 underline">Ir a aprobar clientes →</a>
+                        </p>
+                        {% endif %}
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-success">Aprobar</button>
-            </form>
+            </div>
+            {% elif expense.client and expense.client.status == 'rejected' %}
+            <div class="bg-red-50 border-l-4 border-red-400 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-red-700">
+                            <strong>Atención:</strong> Este gasto no puede ser aprobado porque el cliente "{{ expense.client.name }}" fue rechazado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="space-y-4">
+                <form method="POST" action="{{ url_for('approvals.approve', expense_id=expense.id) }}">
+                    <div class="mb-4">
+                        <label for="approve_comments" class="block text-sm font-medium text-gray-700 mb-1">Comentarios (opcional):</label>
+                        <textarea name="comments" id="approve_comments" rows="2" class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-green-500 focus:ring-green-500"></textarea>
+                    </div>
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
+                        Aprobar
+                    </button>
+                </form>
 
-            <form method="POST" action="{{ url_for('approvals.reject', expense_id=expense.id) }}" class="d-inline ms-2">
-                <div class="mb-3">
-                    <label for="reject_comments" class="form-label">Motivo del rechazo (requerido):</label>
-                    <textarea name="comments" id="reject_comments" class="form-control" rows="2" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-danger">Rechazar</button>
-            </form>
+                <form method="POST" action="{{ url_for('approvals.reject', expense_id=expense.id) }}">
+                    <div class="mb-4">
+                        <label for="reject_comments" class="block text-sm font-medium text-gray-700 mb-1">Motivo del rechazo (requerido):</label>
+                        <textarea name="comments" id="reject_comments" rows="2" required class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:border-red-500 focus:ring-red-500"></textarea>
+                    </div>
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                        Rechazar
+                    </button>
+                </form>
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endif %}
 
-    <div class="mt-3">
-        <a href="{{ url_for('approvals.pending') }}" class="btn btn-secondary">Volver a Pendientes</a>
+    <div class="mb-6">
+        <a href="{{ url_for('approvals.pending') }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition">
+            ← Volver a Pendientes
+        </a>
     </div>
 </div>
 {% endblock %}

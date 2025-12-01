@@ -106,23 +106,65 @@ def areas_edit(id):
 # --- Client Approvals ---
 @admin_bp.route('/clients/approvals')
 def clients_approvals():
+    from models.expense import Expense
+
     pending_clients = Company.query.filter_by(status='pending').all()
-    return render_template('admin/clients/approvals.html', clients=pending_clients)
+
+    # Agregar contador de gastos asociados a cada cliente
+    clients_with_expenses = []
+    for client in pending_clients:
+        expense_count = Expense.query.filter_by(client_id=client.id).count()
+        clients_with_expenses.append({
+            'client': client,
+            'expense_count': expense_count
+        })
+
+    return render_template('admin/clients/approvals.html', clients_data=clients_with_expenses)
 
 @admin_bp.route('/clients/<int:id>/approve', methods=['POST'])
 def clients_approve(id):
+    from models.expense import Expense
+
     client = Company.query.get_or_404(id)
     client.status = 'active'
     client.is_active = True
+
+    # Contar gastos asociados pendientes
+    pending_expenses = Expense.query.filter_by(client_id=client.id, status='pending').count()
+
     db.session.commit()
+
     flash(f'Cliente {client.name} aprobado.', 'success')
+
+    # Notificar sobre gastos pendientes asociados
+    if pending_expenses > 0:
+        flash(f'Hay {pending_expenses} gasto(s) asociado(s) a este cliente que ahora pueden ser aprobados.', 'info')
+
     return redirect(url_for('admin.clients_approvals'))
 
 @admin_bp.route('/clients/<int:id>/reject', methods=['POST'])
 def clients_reject(id):
+    from models.expense import Expense
+
     client = Company.query.get_or_404(id)
+
+    # Contar gastos asociados pendientes
+    pending_expenses = Expense.query.filter_by(client_id=client.id, status='pending').all()
+
+    # Rechazar cliente
     client.status = 'rejected'
     client.is_active = False
+
+    # Rechazar automáticamente gastos asociados pendientes
+    rejected_count = 0
+    for expense in pending_expenses:
+        expense.status = 'rejected'
+        rejected_count += 1
+
     db.session.commit()
-    flash(f'Cliente {client.name} rechazado.', 'success')
+
+    flash(f'Cliente {client.name} rechazado.', 'warning')
+    if rejected_count > 0:
+        flash(f'{rejected_count} gasto(s) asociado(s) fueron rechazados automáticamente.', 'info')
+
     return redirect(url_for('admin.clients_approvals'))

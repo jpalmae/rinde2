@@ -19,6 +19,61 @@ def allowed_file(filename):
 @login_required
 def new():
     if request.method == 'POST':
+        # Verificar si se está creando un cliente nuevo
+        create_new_client = request.form.get('create_new_client') == 'true'
+        client_id = request.form.get('client_id')
+
+        if create_new_client:
+            # Crear cliente nuevo
+            from utils.validators import validate_rut, validate_email, format_rut
+
+            client_rut = request.form.get('new_client_rut')
+            client_name = request.form.get('new_client_name')
+            client_email = request.form.get('new_client_email')
+
+            # Validar RUT
+            is_valid_rut, rut_error = validate_rut(client_rut)
+            if not is_valid_rut:
+                flash(f'RUT del cliente inválido: {rut_error}', 'error')
+                return redirect(request.url)
+
+            formatted_rut = format_rut(client_rut)
+
+            # Validar email si se proporciona
+            if client_email:
+                is_valid_email, email_error = validate_email(client_email)
+                if not is_valid_email:
+                    flash(f'Email del cliente inválido: {email_error}', 'error')
+                    return redirect(request.url)
+
+            # Verificar si el cliente ya existe
+            existing_client = Company.query.filter_by(rut=formatted_rut).first()
+            if existing_client:
+                if existing_client.status == 'rejected':
+                    flash('Este cliente fue rechazado previamente. Contacte a un administrador.', 'error')
+                    return redirect(request.url)
+                client_id = existing_client.id
+                flash(f'Cliente "{existing_client.name}" ya existe, se usará para este gasto.', 'info')
+            else:
+                # Crear nuevo cliente en estado pendiente
+                new_client = Company(
+                    rut=formatted_rut,
+                    name=client_name,
+                    contact_email=client_email,
+                    status='pending',
+                    is_active=False,
+                    created_by=current_user.id,
+                    created_with_expense=True
+                )
+                db.session.add(new_client)
+                db.session.flush()  # Para obtener el ID
+                client_id = new_client.id
+                flash(f'Cliente nuevo "{client_name}" creado. Debe ser aprobado antes del gasto.', 'info')
+
+        if not client_id:
+            flash('Debe seleccionar un cliente o crear uno nuevo.', 'error')
+            return redirect(request.url)
+
         # Basic validation
         if 'receipt' not in request.files:
             flash('No receipt image part', 'error')
@@ -62,17 +117,27 @@ def new():
 
             # Create expense
             try:
+                # Verificar estado del cliente
+                client = Company.query.get(client_id)
+                expense_status = 'pending'
+
+                # Si el cliente está pendiente, el gasto también queda en estado especial
+                if client and client.status == 'pending':
+                    expense_status = 'pending'  # Quedará pendiente hasta que se apruebe el cliente
+                    flash('El gasto quedará pendiente hasta que el cliente sea aprobado.', 'warning')
+
                 expense = Expense(
                     user_id=current_user.id,
                     amount=float(request.form.get('amount')),
                     category=request.form.get('category'),
                     reason=request.form.get('reason'),
-                    client_id=request.form.get('client_id') if request.form.get('client_id') else None,
+                    client_id=client_id,  # Ahora obligatorio
                     latitude=request.form.get('latitude') if request.form.get('latitude') else None,
                     longitude=request.form.get('longitude') if request.form.get('longitude') else None,
                     receipt_image=filename,
                     expense_date=datetime.now(),
-                    ocr_data=ocr_data
+                    ocr_data=ocr_data,
+                    status=expense_status
                 )
 
                 db.session.add(expense)

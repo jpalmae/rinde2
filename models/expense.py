@@ -6,7 +6,7 @@ class Expense(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
+    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable=False)  # Ahora obligatorio
     amount = db.Column(db.Numeric(10, 2), nullable=False)
     expense_date = db.Column(db.Date, nullable=False)
     category = db.Column(db.String(50), nullable=False)
