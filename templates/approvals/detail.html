@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Gasto #{{ expense.id }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Detalle de Gasto #{{ expense.id }}</h2>
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>Información del Gasto</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Empleado:</strong> {{ expense.user.full_name }} ({{ expense.user.email }})</p>
+                    <p><strong>Área:</strong> {{ expense.user.area.name if expense.user.area else 'N/A' }}</p>
+                    <p><strong>Fecha del Gasto:</strong> {{ expense.expense_date.strftime('%d/%m/%Y') }}</p>
+                    <p><strong>Fecha de Creación:</strong> {{ expense.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
+                    <p><strong>Estado:</strong>
+                        <span class="badge
+                            {% if expense.status == 'pending' %}bg-warning
+                            {% elif expense.status == 'approved' %}bg-success
+                            {% elif expense.status == 'rejected' %}bg-danger
+                            {% elif expense.status == 'reimbursed' %}bg-info
+                            {% endif %}">
+                            {{ expense.status }}
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Categoría:</strong> {{ expense.category }}</p>
+                    <p><strong>Monto:</strong> ${{ "{:,.0f}".format(expense.amount) }}</p>
+                    <p><strong>Cliente:</strong> {{ expense.client.name if expense.client else 'N/A' }}</p>
+                    <p><strong>Razón:</strong> {{ expense.reason }}</p>
+                    {% if expense.latitude and expense.longitude %}
+                    <p><strong>Ubicación:</strong>
+                        <a href="https://www.google.com/maps?q={{ expense.latitude }},{{ expense.longitude }}"
+                           target="_blank">Ver en mapa</a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if expense.ocr_data %}
+            <div class="mt-3">
+                <h6>Datos OCR Extraídos:</h6>
+                <p><strong>Confianza:</strong> {{ expense.ocr_data.confidence }}</p>
+                {% if expense.ocr_data.suggested_amount %}
+                <p><strong>Monto detectado:</strong> ${{ "{:,.0f}".format(expense.ocr_data.suggested_amount) }}</p>
+                {% endif %}
+                {% if expense.ocr_data.date %}
+                <p><strong>Fecha detectada:</strong> {{ expense.ocr_data.date }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="mt-3">
+                <h6>Recibo:</h6>
+                <img src="{{ url_for('static', filename='uploads/' + expense.receipt_image) }}"
+                     alt="Recibo" class="img-fluid" style="max-width: 500px;">
+            </div>
+
+            {% if expense.approvals.count() > 0 %}
+            <div class="mt-3">
+                <h6>Historial de Aprobaciones:</h6>
+                <ul class="list-group">
+                    {% for approval in expense.approvals %}
+                    <li class="list-group-item">
+                        <strong>{{ approval.approver.full_name }}</strong>
+                        <span class="badge {% if approval.action == 'approved' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ approval.action }}
+                        </span>
+                        <br>
+                        <small>{{ approval.created_at.strftime('%d/%m/%Y %H:%M') }}</small>
+                        {% if approval.comments %}
+                        <br><em>{{ approval.comments }}</em>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if expense.status == 'pending' %}
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>Acciones</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('approvals.approve', expense_id=expense.id) }}" class="d-inline">
+                <div class="mb-3">
+                    <label for="approve_comments" class="form-label">Comentarios (opcional):</label>
+                    <textarea name="comments" id="approve_comments" class="form-control" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Aprobar</button>
+            </form>
+
+            <form method="POST" action="{{ url_for('approvals.reject', expense_id=expense.id) }}" class="d-inline ms-2">
+                <div class="mb-3">
+                    <label for="reject_comments" class="form-label">Motivo del rechazo (requerido):</label>
+                    <textarea name="comments" id="reject_comments" class="form-control" rows="2" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger">Rechazar</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="mt-3">
+        <a href="{{ url_for('approvals.pending') }}" class="btn btn-secondary">Volver a Pendientes</a>
+    </div>
+</div>
+{% endblock %}

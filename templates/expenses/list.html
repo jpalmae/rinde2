@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Mis Gastos</h1>
+        <a href="{{ url_for('expenses.new') }}"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            + Nuevo
+        </a>
+    </div>
+
+    <div class="bg-white shadow overflow-hidden rounded-md">
+        <ul class="divide-y divide-gray-200">
+            {% for expense in expenses %}
+            <li>
+                <a href="#" class="block hover:bg-gray-50">
+                    <div class="px-4 py-4 sm:px-6">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm font-medium text-blue-600 truncate">
+                                {{ expense.category|title }}
+                            </p>
+                            <div class="ml-2 flex-shrink-0 flex">
+                                <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                          {% if expense.status == 'approved' %}bg-green-100 text-green-800
+                                          {% elif expense.status == 'rejected' %}bg-red-100 text-red-800
+                                          {% elif expense.status == 'reimbursed' %}bg-gray-100 text-gray-800
+                                          {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                    {{ expense.status|title }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-2 sm:flex sm:justify-between">
+                            <div class="sm:flex">
+                                <p class="flex items-center text-sm text-gray-500">
+                                    {{ expense.reason }}
+                                </p>
+                            </div>
+                            <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                <p class="text-lg font-bold text-gray-900 mr-4">
+                                    ${{ "{:,.0f}".format(expense.amount).replace(',', '.') }}
+                                </p>
+                                <p>
+                                    {{ expense.expense_date.strftime('%d/%m/%Y') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            {% else %}
+            <li class="px-4 py-8 text-center text-gray-500">
+                No tienes gastos registrados aún.
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if pagination %}
+    <div class="mt-4">
+        {% include '_pagination.html' %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

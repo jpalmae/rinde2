@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center py-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Bienvenido a SixManager Expense</h1>
+    <p class="text-xl text-gray-600 mb-8">Gestión inteligente de rendición de gastos</p>
+
+    {% if current_user.is_authenticated %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <a href="{{ url_for('expenses.new') }}"
+            class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-200">
+            <div class="text-3xl mb-2">📸</div>
+            <h3 class="text-xl font-semibold mb-2">Nuevo Gasto</h3>
+            <p class="text-gray-500">Captura y sube un nuevo comprobante</p>
+        </a>
+
+        <a href="{{ url_for('expenses.my_expenses') }}"
+            class="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-200">
+            <div class="text-3xl mb-2">📋</div>
+            <h3 class="text-xl font-semibold mb-2">Mis Gastos</h3>
+            <p class="text-gray-500">Revisa el estado de tus rendiciones</p>
+        </a>
+    </div>
+    {% else %}
+    <div class="max-w-md mx-auto">
+        <a href="{{ url_for('auth.login') }}"
+            class="block w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-200">
+            Iniciar Sesión
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

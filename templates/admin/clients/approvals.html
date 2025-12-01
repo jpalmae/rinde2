@@ -1,0 +1,44 @@
+{% extends "admin/base_admin.html" %}
+
+{% block admin_content %}
+<h1 class="text-2xl font-bold mb-6">Aprobación de Clientes</h1>
+
+{% if clients %}
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RUT</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contacto</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Solicitado
+                    por</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for client in clients %}
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ client.rut }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ client.name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ client.contact_email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">ID: {{ client.created_by }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-2">
+                    <form action="{{ url_for('admin.clients_approve', id=client.id) }}" method="POST">
+                        <button type="submit" class="text-green-600 hover:text-green-900">Aprobar</button>
+                    </form>
+                    <form action="{{ url_for('admin.clients_reject', id=client.id) }}" method="POST">
+                        <button type="submit" class="text-red-600 hover:text-red-900">Rechazar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="bg-white p-6 rounded-lg shadow text-center text-gray-500">
+    No hay solicitudes de clientes pendientes.
+</div>
+{% endif %}
+{% endblock %}

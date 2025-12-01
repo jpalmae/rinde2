@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard de Reportes{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2>Dashboard de Gastos</h2>
+
+    <!-- Métricas Principales -->
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total Gastos</h5>
+                    <h2 class="text-primary">{{ total_expenses }}</h2>
+                    <p class="text-muted">${{ "{:,.0f}".format(total_amount) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Pendientes</h5>
+                    <h2 class="text-warning">{{ pending_expenses }}</h2>
+                    <small class="text-muted">Por aprobar</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Aprobados</h5>
+                    <h2 class="text-success">{{ approved_expenses }}</h2>
+                    <p class="text-muted">${{ "{:,.0f}".format(approved_amount) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Rechazados</h5>
+                    <h2 class="text-danger">{{ rejected_expenses }}</h2>
+                    <small class="text-muted">Denegados</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas del Mes -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Gastos del Mes Actual</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h3>{{ month_expenses }} gastos</h3>
+                    <h4 class="text-success">${{ "{:,.0f}".format(month_amount) }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Gráfico de Tendencia</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyChart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gastos por Categoría -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Gastos por Categoría</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="categoryChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Distribución por Estado</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="statusChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Usuarios (solo admin) -->
+    {% if top_users %}
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Top 5 Usuarios con Mayor Gasto</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in top_users %}
+                            <tr>
+                                <td>{{ user[0] }} {{ user[1] }}</td>
+                                <td>{{ user[2] }}</td>
+                                <td>${{ "{:,.0f}".format(user[3]) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Gastos Recientes -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Gastos Recientes</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                                <th>Categoría</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in recent_expenses %}
+                            <tr>
+                                <td>{{ expense.id }}</td>
+                                <td>{{ expense.user.full_name }}</td>
+                                <td>{{ expense.expense_date.strftime('%d/%m/%Y') }}</td>
+                                <td>{{ expense.category }}</td>
+                                <td>${{ "{:,.0f}".format(expense.amount) }}</td>
+                                <td>
+                                    <span class="badge
+                                        {% if expense.status == 'pending' %}bg-warning
+                                        {% elif expense.status == 'approved' %}bg-success
+                                        {% elif expense.status == 'rejected' %}bg-danger
+                                        {% endif %}">
+                                        {{ expense.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlaces rápidos -->
+    <div class="row mt-4 mb-4">
+        <div class="col-md-12">
+            <a href="{{ url_for('reports.by_period') }}" class="btn btn-primary">Reporte por Período</a>
+            <a href="{{ url_for('reports.by_category') }}" class="btn btn-primary">Reporte por Categoría</a>
+            {% if current_user.role == 'admin' %}
+            <a href="{{ url_for('reports.by_area') }}" class="btn btn-primary">Reporte por Área</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// Gráfico mensual
+fetch("{{ url_for('reports.chart_data') }}?type=monthly")
+    .then(response => response.json())
+    .then(data => {
+        const ctx = document.getElementById('monthlyChart');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.map(d => d.label),
+                datasets: [{
+                    label: 'Monto Total',
+                    data: data.map(d => d.value),
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+// Gráfico por categoría
+fetch("{{ url_for('reports.chart_data') }}?type=category")
+    .then(response => response.json())
+    .then(data => {
+        const ctx = document.getElementById('categoryChart');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.map(d => d.label),
+                datasets: [{
+                    label: 'Monto',
+                    data: data.map(d => d.value),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+// Gráfico por estado
+fetch("{{ url_for('reports.chart_data') }}?type=status")
+    .then(response => response.json())
+    .then(data => {
+        const ctx = document.getElementById('statusChart');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: data.map(d => d.label),
+                datasets: [{
+                    data: data.map(d => d.value),
+                    backgroundColor: [
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    });
+</script>
+{% endblock %}

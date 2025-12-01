@@ -1,0 +1,43 @@
+{% extends "admin/base_admin.html" %}
+
+{% block admin_content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Usuarios</h1>
+    <a href="{{ url_for('admin.users_new') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Nuevo
+        Usuario</a>
+</div>
+
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Área</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for user in users %}
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ user.full_name }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ user.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                    {% if user.role == 'admin' %}bg-purple-100 text-purple-800{% else %}bg-green-100 text-green-800{% endif %}">
+                        {{ user.role }}
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ user.area.name if user.area else '-' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <a href="{{ url_for('admin.users_edit', id=user.id) }}"
+                        class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
