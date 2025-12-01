@@ -24,7 +24,7 @@ def create_app():
     from routes.clients import clients_bp
     from routes.approvals import approvals_bp
     from routes.reports import reports_bp
-    # from routes.api import api_bp
+    from routes.api import api_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(expenses_bp)
@@ -32,7 +32,7 @@ def create_app():
     app.register_blueprint(clients_bp)
     app.register_blueprint(approvals_bp)
     app.register_blueprint(reports_bp)
-    # app.register_blueprint(api_bp)
+    app.register_blueprint(api_bp)
     
     @app.route('/')
     def index():

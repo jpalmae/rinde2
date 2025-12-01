@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte por Período{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Reporte de Gastos por Período</h2>
+
+    <!-- Filtros -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <form method="GET" class="row g-3">
+                <div class="col-auto">
+                    <label for="year" class="form-label">Año:</label>
+                    <select name="year" id="year" class="form-select">
+                        {% for y in available_years %}
+                        <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label for="month" class="form-label">Mes (opcional):</label>
+                    <select name="month" id="month" class="form-select">
+                        <option value="">Todos</option>
+                        {% for m in range(1, 13) %}
+                        <option value="{{ m }}" {% if m == month %}selected{% endif %}>
+                            {{ ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][m-1] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary d-block">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resumen -->
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5>Resumen del Período</h5>
+            <p><strong>Total de gastos:</strong> {{ total_count }}</p>
+            <p><strong>Monto total:</strong> ${{ "{:,.0f}".format(total_amount) }}</p>
+        </div>
+    </div>
+
+    <!-- Totales mensuales (si no hay mes específico) -->
+    {% if not month and monthly_totals %}
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>Totales por Mes</h5>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mt in monthly_totals %}
+                    {% if mt.count > 0 %}
+                    <tr>
+                        <td>{{ mt.month_name }}</td>
+                        <td>{{ mt.count }}</td>
+                        <td>${{ "{:,.0f}".format(mt.total) }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="mt-3">
+        <a href="{{ url_for('reports.dashboard') }}" class="btn btn-secondary">Volver al Dashboard</a>
+    </div>
+</div>
+{% endblock %}
